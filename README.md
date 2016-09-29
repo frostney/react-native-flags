@@ -14,22 +14,22 @@ const JustAFlag = () =>
   />
 ```
 
-#### Props
-##### code
-##### Type: `String`
+#### Props  
+##### code  
+##### Type: `String`  
 The ISO code of a flag, for example "DE", "FR" or "GB"
 
-##### type
-##### Type: `String` (Allowed values: `flat` or `shiny`)
-##### Default value: `shiny`
+##### type  
+##### Type: `String` (Allowed values: `flat` or `shiny`)  
+##### Default value: `shiny`  
 Display the flags shiny or flat
 
-##### size
-##### Type: `number` (Allowed values: `16`, `24`, `32`, `48` or `64`)
-##### Default value: `64`
+##### size  
+##### Type: `number` (Allowed values: `16`, `24`, `32`, `48` or `64`)  
+##### Default value: `64`  
 The size of a flag in points.
 
-##### style (optional)
+##### style (optional)  
 Allows additional styles to be passed through.
 
 ### License
