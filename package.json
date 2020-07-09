@@ -1,6 +1,6 @@
 {
   "name": "react-native-flags",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": ":flag: Fun with flags!",
   "main": "index.js",
   "scripts": {
