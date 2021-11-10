@@ -11,6 +11,23 @@ type Props = {
   style?: any,
 };
 
+/**
+ * Find a flag exported from ./flags' sub-directories
+ * (or directories that match the same structure)
+ * and return it.
+ *
+ * @example
+ * import * as flags from './flags';
+ * import * as flatFlags from './flags/flat';
+ * import * as flatFlags16 from './flags/flat/16';
+ *
+ * const emptyFlags = {};
+ * const props = { type: 'flat', size: 16, code: 'ZW' };
+ * 
+ * getFlag(flatFlags16, props) === getFlag(flatFlags, props); // > true
+ * getFlag(flatFlags, props) === getFlag(flags, props); // > true
+ * getFlag(emptyFlags, props); // > null
+ */
 const getFlag = (flags: {}, { type, size, code }: {
   type: string,
   size: number,
@@ -18,7 +35,14 @@ const getFlag = (flags: {}, { type, size, code }: {
 }) => {
   const sizeKey = `icons${size}`;
 
-  return flags[type][sizeKey][code];
+  return (type in flags // ./flags was imported.
+    ? flags[type][sizeKey][code]
+    : sizeKey in flags // ./flags/{type} was imported.
+    ? flags[sizeKey][code]
+    : code in flags // ./flags/{type}/{size} was imported.
+    ? flags[code]
+    : null
+  );
 };
 
 const Flag = ({ from, size = 64, code, type = 'shiny', style }: Props) => {
