@@ -10,6 +10,16 @@ type Props = {
   style?: any,
 };
 
+const getFlag = (flags: {}, { type, size, code }: {
+  type: string,
+  size: number,
+  code: string
+}) => {
+  const sizeKey = `icons${size}`;
+
+  return flags[type][sizeKey][code];
+};
+
 const Flag = ({ size = 64, code, type = 'shiny', style }: Props) => {
   // @TODO Set an initial value.
   const [source, setSource] = useState();
@@ -20,8 +30,8 @@ const Flag = ({ size = 64, code, type = 'shiny', style }: Props) => {
 
     (async () => {
       const flags = await import('./flags');
-      const flag = flags[type][`icons${size}`][code];
-      const unknownFlag = flags[type][`icons${size}`]['unknown'];
+      const flag = getFlag(flags, { type, size, code });
+      const unknownFlag = getFlag(flags, { type, size, code: 'unknown' });
 
       if (isMounted) {
         setSource(flag || unknownFlag);
