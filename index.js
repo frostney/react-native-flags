@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Image } from 'react-native';
 
 type Props = {
+  from?: {},
   size: 16 | 24 | 32 | 48 | 64,
   code: string,
   type?: 'flat' | 'shiny',
@@ -20,7 +21,7 @@ const getFlag = (flags: {}, { type, size, code }: {
   return flags[type][sizeKey][code];
 };
 
-const Flag = ({ size = 64, code, type = 'shiny', style }: Props) => {
+const Flag = ({ from, size = 64, code, type = 'shiny', style }: Props) => {
   // @TODO Set an initial value.
   const [source, setSource] = useState();
 
@@ -29,7 +30,8 @@ const Flag = ({ size = 64, code, type = 'shiny', style }: Props) => {
     let isMounted = true;
 
     (async () => {
-      const flags = await import('./flags');
+      // Use our flags or import all of them.
+      const flags = from || await import('./flags');
       const flag = getFlag(flags, { type, size, code });
       const unknownFlag = getFlag(flags, { type, size, code: 'unknown' });
 
@@ -43,7 +45,7 @@ const Flag = ({ size = 64, code, type = 'shiny', style }: Props) => {
       // @TODO Abort import instead.
       isMounted = false;
     };
-  }, [type, size, code, setSource]);
+  }, [from, type, size, code, setSource]);
 
   return (
     <Image
